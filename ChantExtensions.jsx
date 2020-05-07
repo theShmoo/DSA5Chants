@@ -2,7 +2,7 @@ import React from "react";
 
 import DSAItemList from '../controls/DSAItemList';
 
-export default function SpellExtensions(props) {
+export default function ChantExtensions(props) {
   const {extensions} = props;
   const items = extensions.map( (e) => {
     return {name: e.name, value: e.value};

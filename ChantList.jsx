@@ -1,42 +1,43 @@
 import React from "react";
-import Spell from './Spell';
+import Chant from './Chant';
+
 import { DSAGrid, DSAGridRow, DSAGridItem} from '../controls/DSAGrid';
 import DSAInfoBox from '../controls/DSAInfoBox';
 
-function SpellListMetaInfo(num_spells) {
-  const text = <span> Es wurden <strong>{num_spells + " Zauber"}</strong> gefunden </span>
+function ChantListMetaInfo(num_spells) {
+  const text = <span> Es wurden <strong>{num_spells + " Liturgien"}</strong> gefunden </span>
   return (
     <DSAInfoBox text={text} />
   );
 }
 
-function createSpell(spell, id, favoriteSpells, onFavoriteChange) {
-  const {name, spellclass, properties, spellextensions} = spell;
+function createChant(chant, id, favoriteChants, onFavoriteChange) {
+  const {name, chantclass, properties, chantextensions} = chant;
   return (
     <DSAGridItem xs={12} sm={6} md={4} lg={4} key={id}>
-      <Spell
+      <Chant
         name={name}
-        spellclass={spellclass}
+        chantclass={chantclass}
         properties={properties}
-        extensions={spellextensions}
+        extensions={chantextensions}
         onUserInput={onFavoriteChange}
-        favorites={favoriteSpells}
+        favorites={favoriteChants}
       />
     </DSAGridItem>
   );
 }
 
-export default function SpellList(props) {
-  const {onFavoriteChange, favoriteSpells} = props;
-  const spells = props.spells.map((s, id) => {
-    return createSpell(s, id, favoriteSpells, onFavoriteChange);
+export default function ChantList(props) {
+  const {onFavoriteChange, favoriteChants, chants} = props;
+  const mappedchants = chants.map((s, id) => {
+    return createChant(s, id, favoriteChants, onFavoriteChange);
   })
   return (
     <DSAGrid>
       <DSAGridRow>
-        {SpellListMetaInfo(props.spells.length)}
+        {ChantListMetaInfo(chants.length)}
       </DSAGridRow>
-      {spells}
+      {mappedchants}
     </DSAGrid>
   );
 }

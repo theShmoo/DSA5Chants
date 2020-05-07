@@ -19,9 +19,9 @@ export default class FilterState {
   constructor () {
     this._name = "";
     this._properties = {};
-    this._spellClasses = [];
+    this._chantClasses = [];
     this._favorite = false;
-    this._favoriteSpells = [];
+    this._favoriteChants = [];
 
     this.hasLocalStorage = supportsLocalStorage();
     this.loadFromLocalStorage();
@@ -45,12 +45,12 @@ export default class FilterState {
     this.saveToLocalStorage();
   }
 
-  get spellClasses() {
-    return this._spellClasses;
+  get chantClasses() {
+    return this._chantClasses;
   }
 
-  set spellClasses(newSpellClasses) {
-    this._spellClasses = newSpellClasses;
+  set chantClasses(newChantClasses) {
+    this._chantClasses = newChantClasses;
     this.saveToLocalStorage();
   }
 
@@ -63,12 +63,12 @@ export default class FilterState {
     this.saveToLocalStorage();
   }
 
-  get favoriteSpells() {
-    return this._favoriteSpells;
+  get favoriteChants() {
+    return this._favoriteChants;
   }
 
-  set favoriteSpells(newFavoriteSpells) {
-    this._favoriteSpells = newFavoriteSpells;
+  set favoriteChants(newFavoriteChants) {
+    this._favoriteChants = newFavoriteChants;
     this.saveToLocalStorage();
   }
 
@@ -76,14 +76,14 @@ export default class FilterState {
     // load local state
     if(this.hasLocalStorage) {
       console.log("load local storage");
-      console.log(localStorage.getItem("filter"));
-      var storedFilter = JSON.parse(localStorage.getItem("filter"));
+      console.log(localStorage.getItem("chantfilter"));
+      var storedFilter = JSON.parse(localStorage.getItem("chantfilter"));
       if(storedFilter)
       {
         this._name = storedFilter._name;
         this._properties = storedFilter._properties;
-        this._spellClasses = storedFilter._spellClasses;
-        this._favoriteSpells = storedFilter._favoriteSpells;
+        this._chantClasses = storedFilter._chantClasses;
+        this._favoriteChants = storedFilter._favoriteChants;
         this._favorite = storedFilter._favorite;
       }
     }
@@ -92,7 +92,7 @@ export default class FilterState {
   saveToLocalStorage() {
     if(this.hasLocalStorage) {
       console.log("Save to local storage");
-      localStorage.setItem("filter", JSON.stringify(this));
+      localStorage.setItem("chantfilter", JSON.stringify(this));
       console.log(JSON.stringify(this));
     }
   }
@@ -101,21 +101,21 @@ export default class FilterState {
    * Here start the filter methods
    */
 
-  filterForName(spellname) {
-    return !fuzzyStringCompare(spellname,this.name);
+  filterForName(chantname) {
+    return !fuzzyStringCompare(chantname, this.name);
   }
 
-  filterForProperties(spellproperties) {
+  filterForProperties(chantproperties) {
     var filtered = false;
     // iterate over all properties of the filter
     for (var k in this.properties) {
       // if a property is found (e.g. Merkmal)
-      if(k in spellproperties && this.properties[k].length) {
-        // check for the spell property if it is inside this list
-        var spell_p = spellproperties[k];
+      if(k in chantproperties && this.properties[k].length) {
+        // check for the chant property if it is inside this list
+        var chant_p = chantproperties[k];
         var isInList = false;
         for( var p of this.properties[k]) {
-          isInList = fuzzyStringCompare(spell_p, p);
+          isInList = fuzzyStringCompare(chant_p, p);
           if (isInList)
             break;
         }
@@ -127,28 +127,28 @@ export default class FilterState {
     return filtered;
   }
 
-  filterForSpellClasses(spellclass) {
-    if(this.spellClasses.length)
-      return !(this.spellClasses.indexOf(spellclass) > -1);
+  filterForChantClasses(chantclass) {
+    if(this.chantClasses.length)
+      return !(this.chantClasses.indexOf(chantclass) > -1);
     else
       return false;
   }
 
-  filterForFavorite(spellname) {
-    if(this.favorite && this.favoriteSpells.indexOf(spellname) === -1) {
+  filterForFavorite(chantname) {
+    if(this.favorite && this.favoriteChants.indexOf(chantname) === -1) {
       return true;
     }
     return false;
   }
 
-  filterSpell (spell) {
-    if(this.filterForName(spell.name))
+  filterChant (chant) {
+    if(this.filterForName(chant.name))
       return true;
-    if(this.filterForProperties(spell.properties))
+    if(this.filterForProperties(chant.properties))
       return true;
-    if(this.filterForSpellClasses(spell.spellclass))
+    if(this.filterForChantClasses(chant.chantclass))
       return true;
-    if(this.filterForFavorite(spell.name))
+    if(this.filterForFavorite(chant.name))
       return true;
     return false;
   }

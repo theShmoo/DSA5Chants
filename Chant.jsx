@@ -5,20 +5,20 @@ import DSALink from '../controls/DSALink';
 import DSAInfoBox from '../controls/DSAInfoBox';
 import FavoriteStar from '../controls/DSAFavoriteStar';
 
-import SpellProperties from './SpellProperties';
-import SpellExtensions from "./SpellExtensions";
+import ChantProperties from './ChantProperties';
+import ChantExtensions from "./ChantExtensions";
 
-import {DSASpellClasses} from "../data/DSASpellClasses";
+import {DSAChantClasses} from "../data/DSAChantClasses";
 
-const SpellMetaInfo = ({spellclass}) => {
-  const link = DSASpellClasses.link + DSASpellClasses.SpellClasses[spellclass].link;
-  let tooltip = spellclass + " im Regelwiki";
+const ChantMetaInfo = ({chantclass}) => {
+  const link = DSAChantClasses.link + DSAChantClasses.ChantClasses[chantclass].link;
+  let tooltip = chantclass + " im Regelwiki";
   return (
-    <DSALink tooltip={tooltip} href={link}>{spellclass}</DSALink>
+    <DSALink tooltip={tooltip} href={link}>{chantclass}</DSALink>
   );
 }
 
-const SpellTitle = ({favorites, name, link, onUserInput}) => {
+const ChantTitle = ({favorites, name, onUserInput}) => {
   const fav = (favorites.indexOf(name) >= 0);
   const handleFavClick = () => {
     onUserInput(name);
@@ -30,22 +30,15 @@ const SpellTitle = ({favorites, name, link, onUserInput}) => {
   </span>;
 }
 
-class Spell extends React.Component {
-
-  render() {
-    const title = <SpellTitle {...this.props}/>
-    return (
-      <LazyLoad height={200} once >
-        <DSAInfoBox
-          title={title}
-          text={<SpellMetaInfo spellclass={this.props.spellclass}/>}
-        >
-          <SpellProperties properties={this.props.properties} />
-          <SpellExtensions extensions={this.props.extensions} />
-        </DSAInfoBox>
-      </LazyLoad>
-    );
-  }
+export default function Chant(props) {
+  const title = <ChantTitle {...props}/>
+  return <LazyLoad height={200} once >
+      <DSAInfoBox
+        title={title}
+        text={<ChantMetaInfo chantclass={props.chantclass}/>}
+      >
+        <ChantProperties properties={props.properties} />
+        {props.extensions ? <ChantExtensions extensions={props.extensions} /> : ""}
+      </DSAInfoBox>
+    </LazyLoad>
 }
-
-export default Spell

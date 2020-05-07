@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import SpellBook from './SpellBook';
+import ChantBook from './ChantBook';
 
-import {DSASpells} from "../data/DSASpells";
+import {DSAChants} from "../data/DSAChants";
 
 const styles = {
   root: {
@@ -12,22 +12,22 @@ const styles = {
   }
 };
 
-function sortSpells(spells) {
-  return spells.sort((a,b) => {
+function sortChants(chants) {
+  return chants.sort((a,b) => {
     if(a.name < b.name) return -1;
     if(a.name > b.name) return 1;
     return 0;
   });
 }
 
-function SpellbookMain(props) {
+function ChantsMain(props) {
   return <main className={props.classes.root}>
-        <SpellBook spells={sortSpells(DSASpells)}/>
+        <ChantBook chants={sortChants(DSAChants)}/>
     </main>
 }
 
-SpellbookMain.propTypes = {
+ChantsMain.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SpellbookMain);
+export default withStyles(styles)(ChantsMain);

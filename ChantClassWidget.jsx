@@ -1,10 +1,10 @@
 import React from "react";
 
-import {DSASpellClasses} from "../data/DSASpellClasses";
+import {DSAChantClasses} from "../data/DSAChantClasses";
 import DSASelect from '../controls/DSASelect';
 
 
-export default function SpellClassWidget(props) {
+export default function ChantClassWidget(props) {
 
   let handleChange = (val) => {
     if(val)
@@ -14,14 +14,14 @@ export default function SpellClassWidget(props) {
   }
 
   const {classes} = props;
-  const options = Object.keys(DSASpellClasses.SpellClasses).map(
+  const options = Object.keys(DSAChantClasses.ChantClasses).map(
     (m) => {return {value: m, label: m};});
 
   return <DSASelect
       multi={true}
       options={options}
       value={classes}
-      label="Zauberklassen"
+      label="Kategorie"
       onChange={(v) => handleChange(v)}
     />
 }

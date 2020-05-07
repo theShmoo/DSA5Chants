@@ -2,7 +2,7 @@ import React from "react";
 
 import DSAItemList from '../controls/DSAItemList';
 
-export default function SpellProperties(props) {
+export default function ChantProperties(props) {
   const {properties} = props;
   const items = Object.keys(properties).map( (k) => {
     return {name: k, value: properties[k], dangerouslysetinnerhtml: true};

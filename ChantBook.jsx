@@ -1,13 +1,13 @@
 import React from "react";
 
-import SpellList from "./SpellList";
+import ChantList from "./ChantList";
 import FilterWidget from "./FilterWidget";
 import FilterState from "./FilterState";
 
 import { DSAGrid, DSAGridRow } from '../controls/DSAGrid';
 import DSAInfoBox from '../controls/DSAInfoBox';
 
-export default class SpellBook extends React.Component {
+export default class ChantBook extends React.Component {
 
   state = {
     filter: new FilterState()
@@ -16,13 +16,13 @@ export default class SpellBook extends React.Component {
   handleFavoriteChange = (name) => {
     this.setState(function(prevState) {
       var newFilter = prevState.filter;
-      var newFavoriteSpells = newFilter.favoriteSpells;
-      var i = newFavoriteSpells.indexOf(name);
+      var newFavoriteChants = newFilter.favoriteChants;
+      var i = newFavoriteChants.indexOf(name);
       if (i === -1)
-        newFavoriteSpells.push(name);
+        newFavoriteChants.push(name);
       else
-        newFavoriteSpells.splice(i, 1);
-      newFilter.favoriteSpells = newFavoriteSpells;
+        newFavoriteChants.splice(i, 1);
+      newFilter.favoriteChants = newFavoriteChants;
       return {
         filter: newFilter
       };
@@ -66,7 +66,7 @@ export default class SpellBook extends React.Component {
   handleClassInput = (usedClasses) => {
     this.setState(function(prevState) {
       let newFilter = prevState.filter;
-      newFilter.spellClasses = usedClasses;
+      newFilter.chantClasses = usedClasses;
       return {
         filter: newFilter
       };
@@ -74,18 +74,18 @@ export default class SpellBook extends React.Component {
   }
 
   render() {
-    const spells = this.props.spells.filter(
-      (spell) => { return !this.state.filter.filterSpell(spell); }
+    const chants = this.props.chants.filter(
+      (chant) => { return !this.state.filter.filterChant(chant); }
     );
     return (
       <DSAGrid>
         <DSAGridRow>
           <DSAInfoBox
-            title="Zaubersprüche"
-            text="Suche und Finde Zaubersprüche aller Art">
+            title="Liturgien"
+            text="Suche und Finde Liturgien aller Art">
             <FilterWidget
               filter={this.state.filter}
-              spells={spells}
+              chants={chants}
               onSearchInput={this.handleSearchInput}
               onClassInput={this.handleClassInput}
               onPropertiesInput={this.handlePropertiesInput}
@@ -94,9 +94,9 @@ export default class SpellBook extends React.Component {
           </DSAInfoBox>
         </DSAGridRow>
         <DSAGridRow>
-          <SpellList
-            spells={spells}
-            favoriteSpells={this.state.filter.favoriteSpells}
+          <ChantList
+            chants={chants}
+            favoriteChants={this.state.filter.favoriteChants}
             onFavoriteChange={this.handleFavoriteChange}/>
         </DSAGridRow>
       </DSAGrid>
